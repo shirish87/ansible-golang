@@ -33,3 +33,9 @@
     - { var: "GOARCH", value: "{{ golang_arch }}" }
     - { var: "GOROOT", value: "/usr/local/go" }
     - { var: "GOPATH", value: "{{ golang_path }}" }
+    - { var: "PATH", value: "{{ golang_path }}/bin:$PATH" }
+
+- name: Set GOPATH ownership
+  file: path="{{ golang_path }}"
+        owner="{{ golang_user }}"
+        recurse=yes
