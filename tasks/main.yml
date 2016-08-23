@@ -22,3 +22,14 @@
            creates="{{ golang_path }}/bin/godep"
   environment:
     GOPATH: "{{ golang_path }}"
+
+- name: Set environment variables in .bashrc
+  lineinfile:
+    dest=/home/{{ golang_user }}/.bashrc
+    state=present
+    line="export {{ item.var }}={{ item.value }}"
+  with_items:
+    - { var: "GOOS", value: "{{ golang_os }}" }
+    - { var: "GOARCH", value: "{{ golang_arch }}" }
+    - { var: "GOROOT", value: "/usr/local/go" }
+    - { var: "GOPATH", value: "{{ golang_path }}" }
